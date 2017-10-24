@@ -38,7 +38,6 @@ class Users {
 		var user = this.users.filter((user)=> {
 			return name === user.name && room === user.room;
 		});
-		console.log(user);
 		if(user.length > 0){
 			return true;
 		} else {
