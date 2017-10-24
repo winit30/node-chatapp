@@ -20,11 +20,11 @@ var users = new Users();
 io.on('connection', (socket) => {
 	console.log('New user connected');
 
-    fs.readFile('./server/images/image2.jpg', function(err,buffer){
+    fs.readFile('./server/images/image.jpg', function(err,buffer){
     	var imageArray = new Uint8Array(buffer);
 
     	console.log(imageArray);
-    	
+
     	if(err){
     		return console.log(err);
     	}
