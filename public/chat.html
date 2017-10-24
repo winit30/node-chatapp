@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Node chat app</title>
+<link rel="stylesheet" href="/css/styles.css" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body class="chat">
+
+<div class="chat__sidebar">
+	<h3>People</h3>
+	<div id="users"></div>
+</div>
+
+<div class="chatApp chat__main">
+
+	<ol id="messages" class="chat__messages"></ol>
+
+	<div class="chat__footer">
+		<form id="message-form">
+			<input type="text" value="" name="message" placeholder="Enter your message..." autofocus autocomplete="off" />
+			<button>Send</button>
+		</form>
+		<button id="send-location">Send location</button>
+	</div>
+</div>
+
+<script id="message-template" type="text/template">
+	<li class="message">
+		<div class="message__title">
+			<h4>{{from}}</h4>
+			<span>{{createdAt}}</span>
+		</div>
+		<div class="message__body">
+			<p>{{text}}</p>
+		</div>
+	</li>
+</script>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/jquery-3.2.1.min.js"></script>
+<script src="/js/moment.js"></script>
+<script src="/js/mustache.js"></script>
+<script src="/js/deparam.js"></script>
+<script src="/js/chat.js"></script>
+</body>
+</html>
