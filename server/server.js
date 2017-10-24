@@ -4,6 +4,7 @@ const path = require('path');
 const http = require('http');
 const socketIO = require('socket.io');
 const axios = require('axios');
+const fs = require('fs');
 
 const {generateMessage} = require('./utils/utils');
 const {isRealString} = require('./utils/validation');
@@ -18,6 +19,17 @@ var users = new Users();
 
 io.on('connection', (socket) => {
 	console.log('New user connected');
+
+    fs.readFile('./server/images/image2.jpg', function(err,buffer){
+    	var imageArray = new Uint8Array(buffer);
+
+    	console.log(imageArray);
+    	
+    	if(err){
+    		return console.log(err);
+    	}
+        socket.emit('image', { buffer: buffer });
+    });
 
 	socket.on('new user', (query, callback)=>{
 		var rooms = users.getRoomList();
