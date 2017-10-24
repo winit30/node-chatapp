@@ -47,6 +47,9 @@
  })
 
 socket.on('returnMessage', function(data){
+	if(data.text === 'SERVER-ERROR-FETCH-ADDRESS'){
+		return alert('Unable to fetch data. Try again.');
+	}
 	var formattedTime = moment(data.createdAt).format('h:mm a');
 	var template = jQuery('#message-template').html();
 
@@ -54,7 +57,7 @@ socket.on('returnMessage', function(data){
 		from: data.from,
 		text: data.text,
 		createdAt: formattedTime
-	})
+	});
 
 	jQuery('#messages').append(html);
 	scrollToBottom();

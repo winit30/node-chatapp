@@ -9,6 +9,7 @@ const {generateMessage} = require('./utils/utils');
 const {isRealString} = require('./utils/validation');
 const {Users} = require('./utils/users');
 
+const port = process.env.PORT || 4000;
 app.use(express.static(path.join(__dirname, '../public')));
 
 var server = http.createServer(app);
@@ -52,7 +53,11 @@ io.on('connection', (socket) => {
 		var mainUrl = 'http://maps.googleapis.com/maps/api/geocode/json';
 		var locationUrl = `${mainUrl}?latlng=${coords.latitude},${coords.longitude}&sensor=true`;
 		axios.get(locationUrl).then((res)=>{
-			var text = `My location is ${res.data.results[0].formatted_address}`;
+			try {
+				var text = `My location is ${res.data.results[0].formatted_address}`;
+			} catch(e){
+				var text = 'SERVER-ERROR-FETCH-ADDRESS';
+			}
 			io.to(user.room).emit('returnMessage', generateMessage(user.name, text));
 		}).catch((e)=>{
 			console.log('Error',e);
@@ -70,6 +75,6 @@ io.on('connection', (socket) => {
 	});
 })
 
-server.listen(4000, ()=>{
-	console.log('Server is up on port 4000');
+server.listen(port, ()=>{
+	console.log(`Server is up on port ${port}`);
 });
