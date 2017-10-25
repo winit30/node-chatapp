@@ -1,6 +1,6 @@
 
 var socket = io();
-
+/*
  socket.on('connect', function(){
  	console.log('Connected to server');
  });
@@ -17,7 +17,6 @@ socket.on('image', function(data) {
     for (var i = 0; i < uint8Arr.length; i++) {
         binary += String.fromCharCode(uint8Arr[i]);
     }
-
     var base64String = window.btoa(binary);
 
     var img = new Image();
@@ -26,4 +25,4 @@ socket.on('image', function(data) {
 
     jQuery('.images').attr('src', img.src)
 
-});
+});*/

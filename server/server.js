@@ -23,6 +23,7 @@ var imageFileComp = './server/images/imageDom.jpg';
 io.on('connection', (socket) => {
 	console.log('New user connected');
 
+/*
 	Jimp.read(imageFileOrig).then((image) => {
 	    	 image.quality(60).write(imageFileComp);
 	}).then(()=> {
@@ -37,7 +38,7 @@ io.on('connection', (socket) => {
 	}).catch(function (err) {
 	    console.error(err);
 	});
-
+*/
 	socket.on('new user', (query, callback)=>{
 		var rooms = users.getRoomList();
 		callback(rooms);
