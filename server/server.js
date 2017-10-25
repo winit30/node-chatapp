@@ -5,7 +5,7 @@ const http = require('http');
 const socketIO = require('socket.io');
 const axios = require('axios');
 const fs = require('fs');
-
+const Jimp = require("jimp");
 const {generateMessage} = require('./utils/utils');
 const {isRealString} = require('./utils/validation');
 const {Users} = require('./utils/users');
@@ -17,19 +17,26 @@ var server = http.createServer(app);
 var io = socketIO(server);
 var users = new Users();
 
+var imageFileOrig = './server/images/image3.jpg';
+var imageFileComp = './server/images/imageDom.jpg';
+
 io.on('connection', (socket) => {
 	console.log('New user connected');
 
-    fs.readFile('./server/images/image3.jpg', function(err,buffer){
-    	var imageArray = new Uint8Array(buffer);
-
-    	console.log(imageArray);
-
-    	if(err){
-    		return console.log(err);
-    	}
-        socket.emit('image', { buffer: buffer });
-    });
+	Jimp.read(imageFileOrig).then((image) => {
+	    	 image.quality(60).write(imageFileComp);
+	}).then(()=> {
+		 fs.readFile(imageFileComp, function(err,buffer){
+	    	var imageArray = new Uint8Array(buffer);
+	    	console.log(imageArray);
+	    	if(err){
+	    		return console.log(err);
+	    	}
+	        socket.emit('image', { buffer: buffer });
+	    }); 
+	}).catch(function (err) {
+	    console.error(err);
+	});
 
 	socket.on('new user', (query, callback)=>{
 		var rooms = users.getRoomList();
